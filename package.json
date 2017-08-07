@@ -8,21 +8,20 @@
     "build": "browserify index.js -o dist/HexgridHeatmap.js",
     "dev": "watchify index.js -o dist/HexgridHeatmap.js --verbose"
   },
-  "author": "Sam Kronick (@kronick)",
+  "author": "Sam Kronick <sam.kronick@mapbox.com> (http://samkronick.com)",
   "license": "ISC",
   "dependencies": {
     "@turf/center": "^3.10.3",
     "@turf/destination": "^3.10.3",
     "@turf/distance": "^3.10.3",
     "@turf/hex-grid": "^3.10.3",
+    "browserify": "^14.4.0",
     "rbush": "^2.0.1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kronick/HexgridHeatmap.git"
   },
-  "author": "Sam Kronick <sam.kronick@mapbox.com> (http://samkronick.com)",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/kronick/HexgridHeatmap/issues"
   },

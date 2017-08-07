@@ -31,6 +31,12 @@ function HexgridHeatmap(map, layername, addBefore) {
     this._checkUpdateCompleteClosure = function(e) { thisthis._checkUpdateComplete(e); }
     this._calculatingGrid = false;
     this._recalcWhenReady = false;
+
+    this._reduceFunction = function(data){
+        var sum = data.reduce(function(a, b) { return a + b; });
+        var avg = sum / data.length;
+        return avg;
+    };
 }
 
 HexgridHeatmap.prototype = {
@@ -65,6 +71,14 @@ HexgridHeatmap.prototype = {
         this.map.on("moveend", function() {
             thisthis._updateGrid();
         });
+    },
+
+    setReduceFunction: function(f){
+        this._reduceFunction = f;
+    },
+
+    setPropertyName: function(propertyName){
+        this._propertyName = propertyName;
     },
 
 
@@ -158,20 +172,13 @@ HexgridHeatmap.prototype = {
             maxX: NE.geometry.coordinates[0],
             maxY: NE.geometry.coordinates[1]
         });
-
-        pois.forEach(function(poi) {
-            // TODO: Allow weight to be influenced by a property within the POI
-            var distance = turf.distance(center, poi);
-
-            var weighted = Math.min(Math.exp(-(distance * distance / (2 * sigma * sigma))) * a * amplitude, thisthis._maxPointIntensity);
-            strength += weighted;
-        });
-
-        cell.properties.count = strength;
-
-        if(cell.properties.count > thisthis._minCellIntensity) {
+        if(pois.length > 0){
+            var values = pois.map(function(d){return d['properties'][thisthis._propertyName]});
+            var strength = thisthis._reduceFunction(values);
+            cell.properties.count = strength;
             cellsToSave.push(cell);
         }
+        
       });
 
       hexgrid.features = cellsToSave;
