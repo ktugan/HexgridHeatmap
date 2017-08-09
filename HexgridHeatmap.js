@@ -33,10 +33,17 @@ function HexgridHeatmap(map, layername, addBefore) {
     this._recalcWhenReady = false;
 
     this._reduceFunction = function(data){
-        var sum = data.reduce(function(a, b) { return a + b; });
-        var avg = sum / data.length;
-        return avg;
+        var sum = 0;
+        var count = 0;
+        data.forEach(function(d){
+            if(!isNaN(d)){
+                sum += d;
+                count += 1;
+            }
+        });
+        return count > 0? sum / count: NaN;
     };
+
 }
 
 HexgridHeatmap.prototype = {
@@ -175,8 +182,10 @@ HexgridHeatmap.prototype = {
         if(pois.length > 0){
             var values = pois.map(function(d){return d['properties'][thisthis._propertyName]});
             var strength = thisthis._reduceFunction(values);
-            cell.properties.count = strength;
-            cellsToSave.push(cell);
+            if(!isNaN(strength)){
+                cell.properties.count = strength;
+                cellsToSave.push(cell);
+            }
         }
         
       });

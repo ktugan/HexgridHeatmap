@@ -15,7 +15,6 @@
     "@turf/destination": "^3.10.3",
     "@turf/distance": "^3.10.3",
     "@turf/hex-grid": "^3.10.3",
-    "browserify": "^14.4.0",
     "rbush": "^2.0.1"
   },
   "repository": {
