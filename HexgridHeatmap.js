@@ -180,7 +180,13 @@ HexgridHeatmap.prototype = {
             maxY: NE.geometry.coordinates[1]
         });
         if(pois.length > 0){
-            var values = pois.map(function(d){return d['properties'][thisthis._propertyName]});
+            var values = pois.map(function(d){
+                if(thisthis._propertyName){
+                    return d['properties'][thisthis._propertyName]
+                }else{
+                    return d['properties']
+                }
+            });
             var strength = thisthis._reduceFunction(values);
             if(!isNaN(strength)){
                 cell.properties.count = strength;
