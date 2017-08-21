@@ -80,10 +80,20 @@ HexgridHeatmap.prototype = {
         });
     },
 
+    /**
+     * Sets the function which reduces multiple values to a single one.
+     * The default "reducer" is a mean function.
+     * @param f
+     */
     setReduceFunction: function(f){
         this._reduceFunction = f;
     },
 
+    /**
+     * The propertyName each GeoJson Feature contains which is given to the reduce function.
+     * Default gives all properties. Set an empty string or a null to explicitly invoke this behavior.
+     * @param propertyName
+     */
     setPropertyName: function(propertyName){
         this._propertyName = propertyName;
     },
