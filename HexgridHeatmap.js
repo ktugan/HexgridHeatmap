@@ -58,7 +58,7 @@ HexgridHeatmap.prototype = {
         'paint': {
           'fill-opacity': 1.0,
           'fill-color': {
-            property: 'count',
+            property: 'strength',
             stops: [
               // Short rainbow blue
               [0, "rgba(0,185,243,0)"],
@@ -136,7 +136,7 @@ HexgridHeatmap.prototype = {
       * @param {array} stops - An array of `stops` in the format of the Mapbox GL Style Spec. Values should range from 0 to about 200, though you can control saturation by setting different values here.
       */
     setColorStops: function(stops) {
-        this.layer.setPaintProperty("fill-color", {property: "count", stops: stops});
+        this.layer.setPaintProperty("fill-color", {property: "strength", stops: stops});
     },
 
 
@@ -199,7 +199,7 @@ HexgridHeatmap.prototype = {
             });
             var strength = thisthis._reduceFunction(values);
             if(!isNaN(strength)){
-                cell.properties.count = strength;
+                cell.properties.strength = strength;
                 cellsToSave.push(cell);
             }
         }
